@@ -1,3 +1,44 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+const cells  = Array.from(document.querySelectorAll('.cell'));
+let createGameDialog = document.querySelector('.createGameDialog');
+let winnerDialog = document.querySelector('.winnerDialog');
+
+
+
+cells.forEach((cell, index) => {
+    cell.addEventListener('click', () => {
+        gameController.playTurn(index);
+    });
+});
+
+document.querySelector('.createGame').addEventListener('click', () => {
+    createGameDialog.showModal();
+});
+document.querySelector('.newGame').addEventListener('click',() =>{
+    gameBoard.reset();
+    winnerDialog.close();
+    createGameDialog.showModal();
+})
+document.querySelector('.submit').addEventListener('click', () => {
+    event.preventDefault();
+    let player1 = document.querySelector('#player1').value;
+    let player2 = document.querySelector('#player2').value;
+    console.log(player1, player2);
+    gameController.init(player1, player2);
+    createGameDialog.close();
+
+    document.querySelector('.reset').addEventListener('click',() =>{
+        gameBoard.reset();
+        gameController.init(player1,player2);
+    });
+    document.querySelector('.playAgain').addEventListener('click',() =>{
+        gameBoard.reset();
+        gameController.init(player1,player2);
+        winnerDialog.close();
+    });
+});
+
 // Player Factory Function
 const Player = (name, symbol) => {
     return { name, symbol };
@@ -9,12 +50,9 @@ const gameBoard = (function () {
 
     // Function to render the board (could also be tied to a UI)
     const render = function () {
-        console.clear();
-        console.log(
-            `${board[0] || " "} | ${board[1] || " "} | ${board[2] || " "}\n---------\n${board[3] || " "} | ${
-                board[4] || " "
-            } | ${board[5] || " "}\n---------\n${board[6] || " "} | ${board[7] || " "} | ${board[8] || " "}`
-        );
+        cells.forEach((cell, index) => {
+            cell.textContent = board[index];
+        });
     };
 
     // Function to update the board
@@ -57,7 +95,7 @@ const gameController = (function () {
         gameOver = false;
         gameBoard.reset();
         gameBoard.render();
-        console.log(`${players[currentPlayerIndex].name}'s turn (${players[currentPlayerIndex].symbol})`);
+        document.querySelector('.turn').textContent = (`${players[currentPlayerIndex].name}'s turn (${players[currentPlayerIndex].symbol})`);
     };
 
     // Check for a win condition
@@ -91,7 +129,8 @@ const gameController = (function () {
 
             if (checkWin()) {
                 gameOver = true;
-                console.log(`${players[currentPlayerIndex].name} wins!`);
+                winnerDialog.showModal();
+                document.querySelector('.winner').textContent = `${players[currentPlayerIndex].name} wins!`;
                 return;
             }
 
@@ -102,7 +141,7 @@ const gameController = (function () {
             }
 
             currentPlayerIndex = 1 - currentPlayerIndex;
-            console.log(`${players[currentPlayerIndex].name}'s turn (${players[currentPlayerIndex].symbol})`);
+            document.querySelector('.turn').textContent = (`${players[currentPlayerIndex].name}'s turn (${players[currentPlayerIndex].symbol})`);
         } else {
             console.log("Invalid move. Try again.");
         }
@@ -115,9 +154,6 @@ const gameController = (function () {
 })();
 
 // Example Usage:
-gameController.init("Player 1", "Player 2");
-gameController.playTurn(0); // Player 1 places 'X' at position 0
-gameController.playTurn(4); // Player 2 places 'O' at position 4
-gameController.playTurn(1); // Player 1 places 'X' at position 1
-gameController.playTurn(8); // Player 2 places 'O' at position 8
-gameController.playTurn(2); // Player 1 places 'X' at position 2 and wins
+
+
+});

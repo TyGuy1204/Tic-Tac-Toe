@@ -8,16 +8,42 @@
     <script src = "javascript.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="0"></div>
-        <div class="1"></div>
-        <div class="2"></div>
-        <div class="3"></div>
-        <div class="4"></div>
-        <div class="5"></div>
-        <div class="6"></div>
-        <div class="7"></div>
-        <div class="8"></div>
+    <div class="header">
+        <h1>Tic Tac Toe</h1>
+        <button class="createGame">
+            Create Game
+        </button>
     </div>
+    <dialog hidden class = "createGameDialog">
+        <form class="createGameForm">
+            <label for="player1">Player 1 (X)</label>
+            <input type="text" name="player1" id="player1" required>
+            <label for="player2">Player 2 (O)</label>
+            <input type="text" name="player2" id="player2" required>
+            <button type="submit" class = "submit">Start Game</button>
+        </form>
+    </dialog>
+    <div class="mid">
+        <div class="gameContainer">
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+            <div class="cell"></div>
+        </div>
+    </div>
+    <div class="footer">
+        <h1 class="turn"></h1>
+        <button class="reset">Reset</button>
+    </div>
+    <dialog hidden class  = "winnerDialog">
+        <h1 class="winner"></h1>
+        <button class="playAgain">Play Again</button>
+        <button class  = "newGame">New Game</button>
+    </dialog>
 </body>
 </html> 
